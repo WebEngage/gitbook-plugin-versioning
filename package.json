@@ -1,0 +1,34 @@
+{
+  "name": "gitbook-plugin-versioning",
+  "description": "Versioning for your Gitbook",
+  "main": "index.js",
+  "version": "0.0.1-alpha.1",
+  "engines": {
+    "gitbook": "*"
+  },
+  "dependencies": {
+    "fs": "*",
+    "path": "*"
+  },
+  "homepage": "https://github.com/WebEngage/gitbook-plugin-versioning",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebEngage/gitbook-plugin-versioning.git"
+  },
+  "author": "Nitin Bansal <nitin@webklipper.com>",
+  "scripts": {},
+  "_from": "gitbook-plugin-versioning@0.0.1",
+  "_npmVersion": "2.9.0",
+  "_nodeVersion": "0.10.38",
+  "_npmUser": {
+    "name": "webengage",
+    "email": "lithin@webklipper.com"
+  },
+  "maintainers": [
+    "Nitin Bansal <nitin@webklipper.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/WebEngage/gitbook-plugin-versioning/issues"
+  },
+  "license": "ISC"
+}
