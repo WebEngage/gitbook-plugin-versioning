@@ -7,6 +7,6 @@
 To use it in your book, add this to book.json:
 ```
 {
-    "plugins": ["copy-code-button"]
+    "plugins": ["versioning"]
 }
 ```
