@@ -1,5 +1,10 @@
 var fs = require('fs');
 var path = require('path');
+//var cheerio = require('cheerio');
+
+function cl(msg){
+    console.log(msg);
+}
 
 module.exports = {
     website: {
@@ -19,25 +24,35 @@ module.exports = {
             "head:end": "<!-- head:end -->",
 
             "body:start": "<!-- body:start -->",
-            "body:end": "<!-- body:end -->"
+            "body:end": function(){
+                var config = this.options.pluginsConfig.ga || {};
+                if (!config.token) {
+                	//throw "Need to option 'token' for Google Analytics plugin";
+                }
+
+                return "<!--some html-->";
+            }
         }
     },
     blocks: {
+        // Example: {% codesnippet "/home/page_1/myfile2.ejs", language="html" %}hello{% endcodesnippet %}
         codesnippet: {
             process: function(block) {
-                console.log("codesnippet:process. data: " + block);
+                cl("\n\n\n@@@@@@@@@@@@@@@@");
+                console.log("codesnippet:process. data: " + JSON.stringify(block));
                 var filename = block.args[0];
                 if (!filename) throw new Error('Require a "filename" as first argument');
 
                 // Determine language
                 var language = block.kwargs.language || path.extname(filename).slice(1);
+                cl("language = " + block.kwargs.language);
 
                 // Read the file
                 return this.book.readFile(filename)
 
                 // Return the html content
                 .then(function(content) {
-                    return '<pre><code class="lang-' + language + '">' + content + '</code></pre>';
+                    return '<pre><code class="lang-' + language + '">' + content + '</code></pre>' + block.body;
                 });
             }
         },
@@ -64,10 +79,37 @@ module.exports = {
             console.log("hooks: init!");
         },
 
+        "page:before": function(page) {
+          sectionids = [];
+          return page;
+        },
+
+        "page:after": function(page) {
+            // var section = parseNode(1, page.sections[0].content);
+            // section.path = page.path;
+            // book.unshift(section);
+            return page;
+        },
+
+        // After html generation
+        "page": function(page) {
+            var h = '<a id="edit-link" href="http://webengage.com" class="btn fa fa-edit pull-left">&nbsp;&nbsp;WebEngage</a>';
+            page.sections.forEach(function(section) {
+                //var $ = cheerio.load(section.content);
+                if (section.type == "normal") {
+                    var origcontent = section.content;
+
+                    section.content = h + origcontent;
+                }
+                //section.content = $.html();
+            });
+
+            return page;
+        },
+
         // This is called after the book generation
         "finish": function() {
             console.log("hooks: finish!");
         }
-
     }
 };
