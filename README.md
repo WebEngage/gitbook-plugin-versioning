@@ -2,7 +2,7 @@
 
 ## Install it using:
 
-```$ npm install gitbook-plugin-copy-code-button```
+```$ npm install gitbook-plugin-versioning```
 
 To use it in your book, add this to book.json:
 ```
